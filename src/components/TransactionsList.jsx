@@ -11,65 +11,81 @@ export default function TransactionsList({ onEdit, onDelete }) {
 
   if (transactions.length === 0) {
     return (
-      <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4">Transactions</h2>
-        <p className="text-gray-500 text-center py-8">No transactions yet</p>
+      <div className="bg-white/90 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-xl border border-white/20">
+        <div className="text-center">
+          <div className="text-6xl mb-4">📊</div>
+          <h3 className="text-lg font-semibold text-gray-700 mb-2">No transactions yet</h3>
+          <p className="text-sm text-gray-500">Start by creating your first transaction</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-white p-3 sm:p-4 md:p-6 rounded shadow">
-      <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Transactions</h2>
-      <div className="overflow-x-auto -mx-3 sm:mx-0">
+    <div className="bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-xl border border-white/20 overflow-hidden">
+      <div className="overflow-x-auto -mx-4 sm:mx-0">
         <table className="w-full min-w-[640px]">
           <thead>
-            <tr className="border-b">
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600">Date</th>
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600">Type</th>
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600">Coin</th>
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600">Amount</th>
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600 hidden md:table-cell">To Address</th>
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600 hidden sm:table-cell">Status</th>
-              <th className="text-left py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium text-gray-600">Actions</th>
+            <tr className="border-b-2 border-gray-100">
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Date</th>
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Type</th>
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Coin</th>
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Amount</th>
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider hidden md:table-cell">To Address</th>
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Status</th>
+              <th className="text-left py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map(tx => (
-              <tr key={tx.id} className="border-b hover:bg-gray-50">
-                <td className="py-2 px-2 sm:px-3 text-xs sm:text-sm whitespace-nowrap">{formatDate(tx.date)}</td>
-                <td className="py-2 px-2 sm:px-3">
-                  <span className={`px-2 py-1 rounded text-xs font-medium ${
+            {transactions.map((tx, index) => (
+              <tr
+                key={tx.id}
+                className="border-b border-gray-100 hover:bg-gradient-to-r hover:from-indigo-50/50 hover:to-purple-50/50 transition-all duration-200 group"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <td className="py-3 px-3 sm:px-4 text-xs sm:text-sm whitespace-nowrap font-medium text-gray-700">
+                  {formatDate(tx.date)}
+                </td>
+                <td className="py-3 px-3 sm:px-4">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-sm ${
                     tx.type === 'send' 
-                      ? 'bg-red-100 text-red-800' 
-                      : 'bg-green-100 text-green-800'
+                      ? 'bg-gradient-to-r from-red-100 to-pink-100 text-red-700 border border-red-200' 
+                      : 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border border-green-200'
                   }`}>
+                    <span className="mr-1">{tx.type === 'send' ? '→' : '←'}</span>
                     {tx.type === 'send' ? 'Send' : 'Receive'}
                   </span>
                 </td>
-                <td className="py-2 px-2 sm:px-3 text-xs sm:text-sm font-medium">{tx.symbol}</td>
-                <td className="py-2 px-2 sm:px-3 text-xs sm:text-sm whitespace-nowrap">{tx.amount} {tx.symbol}</td>
-                <td className="py-2 px-2 sm:px-3 text-xs sm:text-sm text-gray-600 font-mono hidden md:table-cell">
-                  {tx.toAddress ? (tx.toAddress.length > 15 ? tx.toAddress.substring(0, 15) + '...' : tx.toAddress) : '—'}
+                <td className="py-3 px-3 sm:px-4 text-xs sm:text-sm font-bold text-gray-800">{tx.symbol}</td>
+                <td className="py-3 px-3 sm:px-4 text-xs sm:text-sm whitespace-nowrap font-semibold text-gray-800">
+                  {tx.amount} {tx.symbol}
                 </td>
-                <td className="py-2 px-2 sm:px-3 hidden sm:table-cell">
-                  <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">
+                <td className="py-3 px-3 sm:px-4 text-xs sm:text-sm text-gray-600 font-mono hidden md:table-cell">
+                  {tx.toAddress ? (
+                    <span className="bg-gray-50 px-2 py-1 rounded border border-gray-200">
+                      {tx.toAddress.length > 15 ? tx.toAddress.substring(0, 15) + '...' : tx.toAddress}
+                    </span>
+                  ) : '—'}
+                </td>
+                <td className="py-3 px-3 sm:px-4 hidden sm:table-cell">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border border-green-200">
+                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span>
                     {tx.status || 'completed'}
                   </span>
                 </td>
-                <td className="py-2 px-2 sm:px-3">
-                  <div className="flex gap-1 sm:gap-2">
+                <td className="py-3 px-3 sm:px-4">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(tx)}
-                      className="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 whitespace-nowrap"
+                      className="px-3 py-1.5 text-xs font-semibold bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200 whitespace-nowrap"
                     >
-                      Edit
+                      ✏️ Edit
                     </button>
                     <button
                       onClick={() => onDelete(tx.id)}
-                      className="px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600 whitespace-nowrap"
+                      className="px-3 py-1.5 text-xs font-semibold bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200 whitespace-nowrap"
                     >
-                      Delete
+                      🗑️ Delete
                     </button>
                   </div>
                 </td>
