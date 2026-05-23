@@ -161,11 +161,11 @@ export default function SignUp() {
                 </div>
                 {message.code && (
                   <div className="mt-3 p-3 bg-white rounded-lg border border-green-300">
-                    <p className="text-xs text-gray-600 mb-1">Demo: Your verification code:</p>
-                    <p className="text-xl font-bold text-green-700 text-center tracking-wider">
+                    <p className="text-xs text-gray-700 mb-1 font-medium">Demo: Your verification code:</p>
+                    <p className="text-xl font-bold text-indigo-600 text-center tracking-wider">
                       {message.code}
                     </p>
-                    <p className="text-xs text-gray-500 mt-2 text-center">
+                    <p className="text-xs text-gray-600 mt-2 text-center font-medium">
                       ⚠️ In production, this would be sent via email
                     </p>
                   </div>

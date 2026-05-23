@@ -32,9 +32,35 @@ const saveVerificationCodes = (codes) => {
   localStorage.setItem('crypto_wallet_verification_codes', JSON.stringify(codes))
 }
 
+// Initialize demo account
+const initializeDemoAccount = () => {
+  const storedUsers = loadUsers()
+  const demoEmail = 'demo@finpay.com'
+  
+  // Check if demo account already exists
+  const demoExists = storedUsers.some(u => u.email === demoEmail)
+  
+  if (!demoExists) {
+    const demoUser = {
+      id: 'demo-user-001',
+      email: demoEmail,
+      password: 'demo123456',
+      name: 'Demo User',
+      verified: true,
+      createdAt: new Date().toISOString()
+    }
+    const updatedUsers = [...storedUsers, demoUser]
+    // Save to localStorage immediately
+    saveUsers(updatedUsers)
+    return updatedUsers
+  }
+  
+  return storedUsers
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [users, setUsers] = useState(loadUsers())
+  const [users, setUsers] = useState(initializeDemoAccount())
   const [verificationCodes, setVerificationCodes] = useState(loadVerificationCodes())
 
   // Load user from localStorage on mount

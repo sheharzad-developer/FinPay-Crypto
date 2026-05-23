@@ -74,6 +74,30 @@ export default function SignIn() {
             <p className="text-gray-700 font-medium">Sign in to your FinPay account</p>
           </div>
 
+          {/* Demo Credentials */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border-2 border-indigo-200">
+            <p className="text-xs font-semibold text-gray-700 mb-2">Demo Credentials:</p>
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setFormData({
+                    email: 'demo@finpay.com',
+                    password: 'demo123456'
+                  })
+                }}
+                className="w-full text-left p-2 bg-white rounded-lg border border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all duration-200 text-xs"
+              >
+                <div className="font-semibold text-gray-800">Email: <span className="text-indigo-600 font-mono">demo@finpay.com</span></div>
+                <div className="font-semibold text-gray-800 mt-1">Password: <span className="text-indigo-600 font-mono">demo123456</span></div>
+                <div className="text-gray-500 text-xs mt-1">Click to auto-fill</div>
+              </button>
+            </div>
+            <p className="text-xs text-gray-600 mt-2 text-center">
+              ⚠️ Note: You need to sign up first if account doesn't exist
+            </p>
+          </div>
+
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>

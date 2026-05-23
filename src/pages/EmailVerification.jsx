@@ -159,21 +159,21 @@ export default function EmailVerification() {
           {verificationCode && (
             <div className="mb-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border-2 border-indigo-200">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-semibold text-gray-700">Demo Mode:</p>
+                <p className="text-sm font-semibold text-gray-800">Demo Mode:</p>
                 <button
                   onClick={() => setShowCode(!showCode)}
-                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 bg-white px-3 py-1 rounded-lg border border-indigo-300"
                 >
                   {showCode ? 'Hide' : 'Show'} Code
                 </button>
               </div>
               {showCode && (
                 <div className="mt-3 p-3 bg-white rounded-lg border border-indigo-300">
-                  <p className="text-xs text-gray-600 mb-1">Your verification code:</p>
-                  <p className="text-2xl font-bold text-indigo-700 text-center tracking-wider">
+                  <p className="text-xs text-gray-700 mb-1 font-medium">Your verification code:</p>
+                  <p className="text-2xl font-bold text-indigo-600 text-center tracking-wider">
                     {verificationCode}
                   </p>
-                  <p className="text-xs text-gray-500 mt-2 text-center">
+                  <p className="text-xs text-gray-600 mt-2 text-center font-medium">
                     ⚠️ In production, this would be sent via email
                   </p>
                 </div>

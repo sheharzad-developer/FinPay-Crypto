@@ -7,12 +7,18 @@ import PriceChart from '../components/PriceChart'
 import TransferModal from '../components/TransferModal'
 import TransactionsList from '../components/TransactionsList'
 import TransactionForm from '../components/TransactionForm'
+import RealWalletCard from '../components/RealWalletCard'
+import RealSendModal from '../components/RealSendModal'
+import RealUsdcCard from '../components/RealUsdcCard'
+import RealUsdcSendModal from '../components/RealUsdcSendModal'
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
   const { balances, prices, loadingPrices, deleteTransaction } = useWallet()
   const [openTransferModal, setOpenTransferModal] = useState(false)
+  const [openRealSend, setOpenRealSend] = useState(false)
+  const [openRealUsdcSend, setOpenRealUsdcSend] = useState(false)
   const [openTransactionForm, setOpenTransactionForm] = useState(false)
   const [selectedCoin, setSelectedCoin] = useState('bitcoin')
   const [editingTransaction, setEditingTransaction] = useState(null)
@@ -92,11 +98,23 @@ export default function Dashboard() {
         </div>
       </header>
 
+      {/* Real Wallet Section */}
+      <section className="mb-6 sm:mb-8">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <span className="w-1 h-6 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full"></span>
+          Real Wallet (Sepolia testnet)
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <RealWalletCard onSend={() => setOpenRealSend(true)} />
+          <RealUsdcCard onSend={() => setOpenRealUsdcSend(true)} />
+        </div>
+      </section>
+
       {/* Balance Cards Section */}
       <section className="mb-6 sm:mb-8">
         <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
           <span className="w-1 h-6 bg-gradient-to-b from-indigo-600 to-purple-600 rounded-full"></span>
-          Portfolio Overview
+          Portfolio Overview <span className="text-xs font-medium text-gray-500">(mock)</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {Object.keys(balances).map((key, index) => (
@@ -161,6 +179,16 @@ export default function Dashboard() {
         open={openTransferModal}
         onClose={() => setOpenTransferModal(false)}
         coinKey={selectedCoin}
+      />
+
+      <RealSendModal
+        open={openRealSend}
+        onClose={() => setOpenRealSend(false)}
+      />
+
+      <RealUsdcSendModal
+        open={openRealUsdcSend}
+        onClose={() => setOpenRealUsdcSend(false)}
       />
 
       <TransactionForm
